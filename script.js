@@ -61,12 +61,20 @@ eventList.innerHTML = events.map(event => `
 // ADMIN LOGIN
 
 (() => {
+  const ADMIN_USERNAME = "Mohamed";
+  const ADMIN_PASSWORD = "LaFarandoleCestMonEcole";
+
   const adminButton = document.getElementById("admin-button");
   const overlay = document.getElementById("login-overlay");
   const closeButton = document.getElementById("close-login");
+  const loginForm = document.getElementById("login-form");
+  const dashboard = document.getElementById("admin-dashboard");
+  const message = document.getElementById("login-message");
+  const logoutButton = document.getElementById("logout-button");
 
-  if (!adminButton || !overlay || !closeButton) {
-    console.error("Admin login elements not found.");
+  if (!adminButton || !overlay || !closeButton || !loginForm ||
+      !dashboard || !message || !logoutButton) {
+    console.error("Admin elements missing.");
     return;
   }
 
@@ -79,9 +87,23 @@ eventList.innerHTML = events.map(event => `
     overlay.style.display = "none";
   });
 
-  overlay.addEventListener("click", (e) => {
-    if (e.target === overlay) {
+  loginForm.addEventListener("submit", (e) => {
+    e.preventDefault();
+
+    const username = document.getElementById("admin-username").value.trim();
+    const password = document.getElementById("admin-password").value;
+
+    if (username === ADMIN_USERNAME && password === ADMIN_PASSWORD) {
       overlay.style.display = "none";
+      dashboard.classList.add("active");
+      message.textContent = "";
+      dashboard.scrollIntoView({ behavior: "smooth" });
+    } else {
+      message.textContent = "Invalid username or password.";
     }
+  });
+
+  logoutButton.addEventListener("click", () => {
+    dashboard.classList.remove("active");
   });
 })();
