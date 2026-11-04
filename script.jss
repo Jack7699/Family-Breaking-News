@@ -58,6 +58,51 @@ eventList.innerHTML = events.map(event => `
     </div>
   </div>
 `).join("");
+// DEMO ADMIN ACCOUNT
+// WARNING: These credentials are publicly visible in source code.
+
+const ADMIN_USERNAME = "admin";
+const ADMIN_PASSWORD = "CHANGE-ME-123";
+
+const overlay = document.getElementById("login-overlay");
+const dashboard = document.getElementById("admin-dashboard");
+
+document.getElementById("admin-button").addEventListener("click", (e) => {
+  e.preventDefault();
+  overlay.style.display = "flex";
+});
+
+document.getElementById("close-login").addEventListener("click", () => {
+  overlay.style.display = "none";
+});
+
+document.getElementById("login-form").addEventListener("submit", (e) => {
+  e.preventDefault();
+
+  const username = document.getElementById("admin-username").value;
+  const password = document.getElementById("admin-password").value;
+  const message = document.getElementById("login-message");
+
+  if (username === ADMIN_USERNAME && password === ADMIN_PASSWORD) {
+    sessionStorage.setItem("fbnAdminLoggedIn", "true");
+    overlay.style.display = "none";
+    dashboard.style.display = "block";
+    message.textContent = "";
+    dashboard.scrollIntoView({ behavior: "smooth" });
+  } else {
+    message.textContent = "Invalid username or password.";
+    message.style.color = "#ff737b";
+  }
+});
+
+document.getElementById("logout-button").addEventListener("click", () => {
+  sessionStorage.removeItem("fbnAdminLoggedIn");
+  dashboard.style.display = "none";
+});
+
+if (sessionStorage.getItem("fbnAdminLoggedIn") === "true") {
+  dashboard.style.display = "block";
+}
 
 document.getElementById("ticker").textContent =
   news[0].title + " — " + news[0].description;
