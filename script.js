@@ -78,10 +78,10 @@ eventList.innerHTML = events.map(event => `
     return;
   }
 
-  adminButton.addEventListener("click", (e) => {
-    e.preventDefault();
-    overlay.style.display = "flex";
-  });
+adminButton.onclick = (e) => {
+  e.preventDefault();
+  overlay.style.display = "flex";
+};
 
   closeButton.addEventListener("click", () => {
     overlay.style.display = "none";
