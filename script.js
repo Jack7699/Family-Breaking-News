@@ -62,7 +62,7 @@ eventList.innerHTML = events.map(event => `
 
 (() => {
   const ADMIN_USERNAME = "Mohamed";
-  const ADMIN_PASSWORD = "LaFarandoleCestMonEcole";
+  const ADMIN_PASSWORD = "DontStayAwakeForTooLong";
 
   const adminButton = document.getElementById("admin-button");
   const overlay = document.getElementById("login-overlay");
