@@ -28,7 +28,39 @@
   <a href="#latest">LATEST NEWS</a>
   <a href="#events">EVENTS</a>
   <a href="#about">ABOUT</a>
+  <a href="#" id="admin-button" class="admin-button">ADMIN LOGIN</a>
 </nav>
+
+<div class="login-overlay" id="login-overlay">
+  <div class="login-box">
+    <button class="close-login" id="close-login">×</button>
+    <span class="eyebrow">RESTRICTED ACCESS</span>
+    <h2>Admin Login</h2>
+    <p>Sign in to the newsroom administration.</p>
+
+    <form id="login-form">
+      <label>Username</label>
+      <input id="admin-username" type="text"
+        placeholder="Enter username" required>
+
+      <label>Password</label>
+      <input id="admin-password" type="password"
+        placeholder="Enter password" required>
+
+      <button type="submit" class="primary-btn login-submit">
+        SIGN IN →
+      </button>
+    </form>
+
+    <p id="login-message"></p>
+  </div>
+</div>
+
+<div class="admin-dashboard" id="admin-dashboard">
+  <h2>Administration Panel</h2>
+  <p>Welcome to Family Breaking News administration.</p>
+  <button id="logout-button" class="primary-btn">LOG OUT</button>
+</div>
 
 <main>
   <section class="hero" id="home">
