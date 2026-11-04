@@ -88,7 +88,25 @@ eventList.innerHTML = events.map(event => `
   });
 
   loginForm.addEventListener("submit", (e) => {
-    e.preventDefault();
+  e.preventDefault();
+
+  console.log("LOGIN SUBMITTED");
+
+  const username = document.getElementById("admin-username").value.trim();
+  const password = document.getElementById("admin-password").value;
+
+  message.style.display = "block";
+
+  if (username === ADMIN_USERNAME && password === ADMIN_PASSWORD) {
+    message.textContent = "Login successful!";
+    dashboard.classList.add("active");
+    overlay.style.display = "none";
+    dashboard.scrollIntoView({ behavior: "smooth" });
+  } else {
+    message.textContent = "Incorrect username or password.";
+    message.style.color = "#ff737b";
+  }
+});
 
     const username = document.getElementById("admin-username").value.trim();
     const password = document.getElementById("admin-password").value;
