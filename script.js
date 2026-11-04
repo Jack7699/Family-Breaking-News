@@ -20,6 +20,7 @@ const news = [
   }
 ];
 
+// EVENTS
 const events = [
   {
     date: "TBA",
@@ -33,36 +34,64 @@ const events = [
   }
 ];
 
+// ==========================================
+// DISPLAY NEWS
+// ==========================================
+
 const grid = document.getElementById("news-grid");
 
-grid.innerHTML = news.map(item => `
-  <article class="news-card">
-    <div class="news-image"></div>
-    <div class="news-content">
-      <span class="category">${item.category}</span>
-      <h3>${item.title}</h3>
-      <p>${item.description}</p>
-      <span class="news-date">${item.date}</span>
-    </div>
-  </article>
-`).join("");
+if (grid) {
+  grid.innerHTML = news.map(item => `
+    <article class="news-card">
+      <div class="news-image"></div>
+      <div class="news-content">
+        <span class="category">${item.category}</span>
+        <h3>${item.title}</h3>
+        <p>${item.description}</p>
+        <span class="news-date">${item.date}</span>
+      </div>
+    </article>
+  `).join("");
+}
+
+// ==========================================
+// DISPLAY EVENTS
+// ==========================================
 
 const eventList = document.getElementById("events-list");
 
-eventList.innerHTML = events.map(event => `
-  <div class="event-item">
-    <div class="event-date">${event.date}</div>
-    <div>
-      <h3>${event.title}</h3>
-      <p>${event.description}</p>
+if (eventList) {
+  eventList.innerHTML = events.map(event => `
+    <div class="event-item">
+      <div class="event-date">${event.date}</div>
+      <div>
+        <h3>${event.title}</h3>
+        <p>${event.description}</p>
+      </div>
     </div>
-  </div>
-`).join("");
+  `).join("");
+}
+
+// ==========================================
+// FOOTER YEAR
+// ==========================================
+
+const yearElement = document.getElementById("year");
+
+if (yearElement) {
+  yearElement.textContent = new Date().getFullYear();
+}
+
+// ==========================================
 // ADMIN LOGIN
+// ==========================================
 
 (() => {
   const ADMIN_USERNAME = "Mohamed";
-  const ADMIN_PASSWORD = "DontStayAwakeForTooLong";
+
+  // TEMPORARY DEMO ONLY.
+  // Replace with a new password, not your exposed old one.
+  const ADMIN_PASSWORD = "CHANGE_THIS_TO_A_NEW_PASSWORD";
 
   const adminButton = document.getElementById("admin-button");
   const overlay = document.getElementById("login-overlay");
@@ -72,56 +101,79 @@ eventList.innerHTML = events.map(event => `
   const message = document.getElementById("login-message");
   const logoutButton = document.getElementById("logout-button");
 
-  if (!adminButton || !overlay || !closeButton || !loginForm ||
-      !dashboard || !message || !logoutButton) {
-    console.error("Admin elements missing.");
+  if (
+    !adminButton ||
+    !overlay ||
+    !closeButton ||
+    !loginForm ||
+    !dashboard ||
+    !message ||
+    !logoutButton
+  ) {
+    console.error("Admin elements missing. Check index.html.");
     return;
   }
 
-adminButton.onclick = (e) => {
-  e.preventDefault();
-  overlay.style.display = "flex";
-};
+  // OPEN LOGIN
+  adminButton.addEventListener("click", (event) => {
+    event.preventDefault();
+    overlay.style.display = "flex";
+    message.textContent = "";
+  });
 
+  // CLOSE LOGIN
   closeButton.addEventListener("click", () => {
     overlay.style.display = "none";
   });
 
-  loginForm.addEventListener("submit", (e) => {
-  e.preventDefault();
-
-  console.log("LOGIN SUBMITTED");
-
-  const username = document.getElementById("admin-username").value.trim();
-  const password = document.getElementById("admin-password").value;
-
-  message.style.display = "block";
-
-  if (username === ADMIN_USERNAME && password === ADMIN_PASSWORD) {
-    message.textContent = "Login successful!";
-    dashboard.classList.add("active");
-    overlay.style.display = "none";
-    dashboard.scrollIntoView({ behavior: "smooth" });
-  } else {
-    message.textContent = "Incorrect username or password.";
-    message.style.color = "#ff737b";
-  }
-});
-
-    const username = document.getElementById("admin-username").value.trim();
-    const password = document.getElementById("admin-password").value;
-
-    if (username === ADMIN_USERNAME && password === ADMIN_PASSWORD) {
+  // CLOSE WHEN CLICKING OUTSIDE
+  overlay.addEventListener("click", (event) => {
+    if (event.target === overlay) {
       overlay.style.display = "none";
-      dashboard.classList.add("active");
-      message.textContent = "";
-      dashboard.scrollIntoView({ behavior: "smooth" });
-    } else {
-      message.textContent = "Invalid username or password.";
     }
   });
 
+  // LOGIN VALIDATION
+  loginForm.addEventListener("submit", (event) => {
+    event.preventDefault();
+
+    const username = document
+      .getElementById("admin-username")
+      .value.trim();
+
+    const password = document
+      .getElementById("admin-password")
+      .value;
+
+    message.style.display = "block";
+
+    if (
+      username === ADMIN_USERNAME &&
+      password === ADMIN_PASSWORD
+    ) {
+      message.textContent = "Login successful!";
+      message.style.color = "#70df9b";
+
+      dashboard.classList.add("active");
+      overlay.style.display = "none";
+
+      dashboard.scrollIntoView({
+        behavior: "smooth"
+      });
+
+      loginForm.reset();
+
+    } else {
+      message.textContent = "Incorrect username or password.";
+      message.style.color = "#ff737b";
+    }
+  });
+
+  // LOGOUT
   logoutButton.addEventListener("click", () => {
     dashboard.classList.remove("active");
+    loginForm.reset();
+    message.textContent = "";
   });
+
 })();
