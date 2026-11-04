@@ -60,49 +60,28 @@ eventList.innerHTML = events.map(event => `
 `).join("");
 // ADMIN LOGIN
 
-const ADMIN_USERNAME = "admin";
-const ADMIN_PASSWORD = "CHANGE-ME-123";
+document.addEventListener("DOMContentLoaded", () => {
+  const adminButton = document.getElementById("admin-button");
+  const overlay = document.getElementById("login-overlay");
+  const closeButton = document.getElementById("close-login");
 
-const adminButton = document.getElementById("admin-button");
-const overlay = document.getElementById("login-overlay");
-const dashboard = document.getElementById("admin-dashboard");
-const closeButton = document.getElementById("close-login");
-const loginForm = document.getElementById("login-form");
-const logoutButton = document.getElementById("logout-button");
-const message = document.getElementById("login-message");
-
-adminButton.addEventListener("click", function(e) {
-  e.preventDefault();
-  overlay.style.display = "flex";
-});
-
-closeButton.addEventListener("click", function() {
-  overlay.style.display = "none";
-});
-
-overlay.addEventListener("click", function(e) {
-  if (e.target === overlay) {
-    overlay.style.display = "none";
+  if (!adminButton || !overlay || !closeButton) {
+    console.error("Admin login elements not found.");
+    return;
   }
-});
 
-loginForm.addEventListener("submit", function(e) {
-  e.preventDefault();
+  adminButton.addEventListener("click", (e) => {
+    e.preventDefault();
+    overlay.style.display = "flex";
+  });
 
-  const username = document.getElementById("admin-username").value.trim();
-  const password = document.getElementById("admin-password").value;
-
-  if (username === ADMIN_USERNAME && password === ADMIN_PASSWORD) {
+  closeButton.addEventListener("click", () => {
     overlay.style.display = "none";
-    dashboard.classList.add("active");
-    message.textContent = "";
-    dashboard.scrollIntoView({ behavior: "smooth" });
-  } else {
-    message.textContent = "Invalid username or password.";
-    message.style.color = "#ff737b";
-  }
-});
+  });
 
-logoutButton.addEventListener("click", function() {
-  dashboard.classList.remove("active");
+  overlay.addEventListener("click", (e) => {
+    if (e.target === overlay) {
+      overlay.style.display = "none";
+    }
+  });
 });
