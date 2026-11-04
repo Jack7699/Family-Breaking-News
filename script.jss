@@ -60,7 +60,7 @@ eventList.innerHTML = events.map(event => `
 `).join("");
 // ADMIN LOGIN
 
-document.addEventListener("DOMContentLoaded", () => {
+(() => {
   const adminButton = document.getElementById("admin-button");
   const overlay = document.getElementById("login-overlay");
   const closeButton = document.getElementById("close-login");
@@ -84,4 +84,4 @@ document.addEventListener("DOMContentLoaded", () => {
       overlay.style.display = "none";
     }
   });
-});
+})();
