@@ -58,30 +58,38 @@ eventList.innerHTML = events.map(event => `
     </div>
   </div>
 `).join("");
-// DEMO ADMIN ACCOUNT
-// WARNING: These credentials are publicly visible in source code.
-
+// ADMIN LOGIN
 
 const ADMIN_USERNAME = "admin";
 const ADMIN_PASSWORD = "CHANGE-ME-123";
 
+const adminButton = document.getElementById("admin-button");
 const overlay = document.getElementById("login-overlay");
 const dashboard = document.getElementById("admin-dashboard");
+const closeButton = document.getElementById("close-login");
+const loginForm = document.getElementById("login-form");
+const logoutButton = document.getElementById("logout-button");
 const message = document.getElementById("login-message");
 
-document.getElementById("admin-button").addEventListener("click", (e) => {
+adminButton.addEventListener("click", function(e) {
   e.preventDefault();
   overlay.style.display = "flex";
 });
 
-document.getElementById("close-login").addEventListener("click", () => {
+closeButton.addEventListener("click", function() {
   overlay.style.display = "none";
 });
 
-document.getElementById("login-form").addEventListener("submit", (e) => {
+overlay.addEventListener("click", function(e) {
+  if (e.target === overlay) {
+    overlay.style.display = "none";
+  }
+});
+
+loginForm.addEventListener("submit", function(e) {
   e.preventDefault();
 
-  const username = document.getElementById("admin-username").value;
+  const username = document.getElementById("admin-username").value.trim();
   const password = document.getElementById("admin-password").value;
 
   if (username === ADMIN_USERNAME && password === ADMIN_PASSWORD) {
@@ -95,6 +103,6 @@ document.getElementById("login-form").addEventListener("submit", (e) => {
   }
 });
 
-document.getElementById("logout-button").addEventListener("click", () => {
+logoutButton.addEventListener("click", function() {
   dashboard.classList.remove("active");
 });
