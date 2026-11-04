@@ -89,8 +89,8 @@ if (yearElement) {
 (() => {
   const ADMIN_USERNAME = "Mohamed";
 
-  // TEMPORARY DEMO ONLY.
-  // Replace with a new password, not your exposed old one.
+  // DEMO ONLY: This password is visible in public JavaScript.
+  // Do not use this as real security.
   const ADMIN_PASSWORD = "CHANGE_THIS_TO_A_NEW_PASSWORD";
 
   const adminButton = document.getElementById("admin-button");
@@ -140,6 +140,26 @@ if (yearElement) {
     const username = document
       .getElementById("admin-username")
       .value.trim();
+
+    const password = document
+      .getElementById("admin-password")
+      .value;
+
+    message.style.display = "block";
+
+    if (
+      username === ADMIN_USERNAME &&
+      password === ADMIN_PASSWORD
+    ) {
+      message.textContent = "Login successful!";
+      message.style.color = "#70df9b";
+
+      dashboard.classList.add("active");
+      overlay.style.display = "none";
+
+      dashboard.scrollIntoView({
+        behavior: "smooth"
+      });
 
       loginForm.reset();
 
