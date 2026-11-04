@@ -78,7 +78,15 @@
 }
 
 .admin-dashboard {
-  display: none;
+  display: none !important;
+  padding: 60px 8%;
+  background: #182536;
+  min-height: 300px;
+}
+
+.admin-dashboard.active {
+  display: block !important;
+}
   padding: 60px 8%;
   background: #182536;
   min-height: 300px;
