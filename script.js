@@ -91,7 +91,7 @@ if (yearElement) {
 
   // DEMO ONLY: This password is visible in public JavaScript.
   // Do not use this as real security.
-  const ADMIN_PASSWORD = "CHANGE_THIS_TO_A_NEW_PASSWORD";
+  const ADMIN_PASSWORD = "ADMIN123LOL";
 
   const adminButton = document.getElementById("admin-button");
   const overlay = document.getElementById("login-overlay");
