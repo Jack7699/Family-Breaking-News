@@ -1,4 +1,88 @@
+.admin-button {
+  color: #ff737b !important;
+  border: 1px solid #d52b35;
+  padding: 9px 13px;
+  border-radius: 4px;
+}
 
+.login-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,.85);
+  z-index: 1000;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.login-box {
+  position: relative;
+  background: #182536;
+  border: 1px solid #34465c;
+  padding: 35px;
+  border-radius: 9px;
+  width: 100%;
+  max-width: 420px;
+}
+
+.login-box h2 {
+  margin: 15px 0 10px;
+}
+
+.login-box p {
+  color: #9aaabd;
+  font-size: 12px;
+  margin-bottom: 22px;
+}
+
+.login-box label {
+  display: block;
+  font-size: 12px;
+  margin: 15px 0 8px;
+}
+
+.login-box input {
+  width: 100%;
+  padding: 13px;
+  background: #101722;
+  border: 1px solid #34465c;
+  color: white;
+  border-radius: 4px;
+  outline: none;
+}
+
+.login-box input:focus {
+  border-color: #d52b35;
+}
+
+.close-login {
+  position: absolute;
+  right: 18px;
+  top: 12px;
+  background: none;
+  border: none;
+  color: white;
+  font-size: 27px;
+  cursor: pointer;
+}
+
+.login-submit {
+  width: 100%;
+  border: none;
+  cursor: pointer;
+}
+
+#login-message {
+  margin-top: 15px;
+}
+
+.admin-dashboard {
+  display: none;
+  padding: 60px 8%;
+  background: #182536;
+  min-height: 300px;
+}
 :root {
   --bg: #101722;
   --panel: #182536;
