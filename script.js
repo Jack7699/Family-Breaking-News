@@ -145,23 +145,18 @@ if (yearElement) {
       .getElementById("admin-password")
       .value;
 
-    message.style.display = "block";
-
     if (
       username === ADMIN_USERNAME &&
       password === ADMIN_PASSWORD
     ) {
-      message.textContent = "Login successful!";
-      message.style.color = "#70df9b";
-
       dashboard.classList.add("active");
       overlay.style.display = "none";
+      message.textContent = "";
+      loginForm.reset();
 
       dashboard.scrollIntoView({
         behavior: "smooth"
       });
-
-      loginForm.reset();
 
     } else {
       message.textContent = "Incorrect username or password.";
