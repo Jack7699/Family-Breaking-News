@@ -61,11 +61,13 @@ eventList.innerHTML = events.map(event => `
 // DEMO ADMIN ACCOUNT
 // WARNING: These credentials are publicly visible in source code.
 
-const ADMIN_USERNAME = "HILAL Mohamed";
-const ADMIN_PASSWORD = "LaFarandoleCestMonEcole";
+
+const ADMIN_USERNAME = "admin";
+const ADMIN_PASSWORD = "CHANGE-ME-123";
 
 const overlay = document.getElementById("login-overlay");
 const dashboard = document.getElementById("admin-dashboard");
+const message = document.getElementById("login-message");
 
 document.getElementById("admin-button").addEventListener("click", (e) => {
   e.preventDefault();
@@ -81,12 +83,10 @@ document.getElementById("login-form").addEventListener("submit", (e) => {
 
   const username = document.getElementById("admin-username").value;
   const password = document.getElementById("admin-password").value;
-  const message = document.getElementById("login-message");
 
   if (username === ADMIN_USERNAME && password === ADMIN_PASSWORD) {
-    sessionStorage.setItem("fbnAdminLoggedIn", "true");
     overlay.style.display = "none";
-    dashboard.style.display = "block";
+    dashboard.classList.add("active");
     message.textContent = "";
     dashboard.scrollIntoView({ behavior: "smooth" });
   } else {
@@ -96,16 +96,5 @@ document.getElementById("login-form").addEventListener("submit", (e) => {
 });
 
 document.getElementById("logout-button").addEventListener("click", () => {
-  sessionStorage.removeItem("fbnAdminLoggedIn");
-  dashboard.style.display = "none";
+  dashboard.classList.remove("active");
 });
-
-if (sessionStorage.getItem("fbnAdminLoggedIn") === "true") {
-  dashboard.style.display = "block";
-}
-
-document.getElementById("ticker").textContent =
-  news[0].title + " — " + news[0].description;
-
-document.getElementById("year").textContent =
-  new Date().getFullYear();
