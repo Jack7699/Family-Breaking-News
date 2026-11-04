@@ -24,7 +24,7 @@ const news = [
 const events = [
   {
     date: "TBA",
-    title: "Chofiti",
+    title: "This event will be soon",
     description: "More information will be announced soon."
   },
   {
