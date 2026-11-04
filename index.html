@@ -1,0 +1,97 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#101722">
+  <title>Family Breaking News</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<header class="topbar">
+  <div class="brand">
+    <span class="brand-icon">FBN</span>
+    <div>
+      <h1>FAMILY BREAKING NEWS</h1>
+      <p>YOUR FAMILY. YOUR NEWS. YOUR NETWORK.</p>
+    </div>
+  </div>
+  <div class="live"><span></span> LIVE NETWORK</div>
+</header>
+
+<nav class="navbar">
+  <a href="#home">HOME</a>
+  <a href="#latest">LATEST NEWS</a>
+  <a href="#events">EVENTS</a>
+  <a href="#about">ABOUT</a>
+</nav>
+
+<main>
+  <section class="hero" id="home">
+    <div class="hero-content">
+      <span class="eyebrow">THE FAMILY NEWSROOM</span>
+      <h2>Stay informed.<br><span>Stay connected.</span></h2>
+      <p>Your central destination for family announcements,
+         important updates, events and stories.</p>
+      <a href="#latest" class="primary-btn">EXPLORE THE NEWS →</a>
+    </div>
+    <div class="hero-side">
+      <div class="network-card">
+        <span class="network-label">NETWORK STATUS</span>
+        <h3>OPERATIONAL</h3>
+        <p>Family News Network</p>
+        <div class="status-line"></div>
+        <span class="small">ALL SYSTEMS NORMAL</span>
+      </div>
+    </div>
+  </section>
+
+  <div class="breaking-bar">
+    <strong>BREAKING NEWS</strong>
+    <div id="ticker">Welcome to Family Breaking News.</div>
+  </div>
+
+  <section class="section" id="latest">
+    <div class="section-heading">
+      <div>
+        <span class="eyebrow">THE NEWSROOM</span>
+        <h2>Latest Headlines</h2>
+      </div>
+      <span class="section-label">RECENT UPDATES</span>
+    </div>
+
+    <div class="news-grid" id="news-grid"></div>
+  </section>
+
+  <section class="section events" id="events">
+    <div class="section-heading">
+      <div>
+        <span class="eyebrow">ON THE CALENDAR</span>
+        <h2>Upcoming Events</h2>
+      </div>
+    </div>
+    <div id="events-list"></div>
+  </section>
+
+  <section class="about" id="about">
+    <span class="eyebrow">ABOUT THE NETWORK</span>
+    <h2>One family. One network.</h2>
+    <p>Family Breaking News is a family-focused news platform
+       dedicated to sharing announcements, updates and memorable
+       moments in one place.</p>
+  </section>
+</main>
+
+<footer>
+  <div class="footer-brand">FAMILY BREAKING NEWS</div>
+  <p>Independent family news network.</p>
+  <p>© <span id="year"></span> Family Breaking News.</p>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>
