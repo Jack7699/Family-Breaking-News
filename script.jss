@@ -61,8 +61,8 @@ eventList.innerHTML = events.map(event => `
 // DEMO ADMIN ACCOUNT
 // WARNING: These credentials are publicly visible in source code.
 
-const ADMIN_USERNAME = "admin";
-const ADMIN_PASSWORD = "CHANGE-ME-123";
+const ADMIN_USERNAME = "HILAL Mohamed";
+const ADMIN_PASSWORD = "LaFarandoleCestMonEcole";
 
 const overlay = document.getElementById("login-overlay");
 const dashboard = document.getElementById("admin-dashboard");
