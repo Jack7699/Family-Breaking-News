@@ -774,16 +774,19 @@ async function loadPosts() {
   );
 
   posts.forEach(post => {
-    const card = document.createElement("article");
+const card = document.createElement("article");
 
-      card.dataset.category = (post.originalCategory || post.category).toUpperCase();    card.dataset.search = [
-      post.title,
-      post.category,
-      post.content
-    ].join(" ").toLowerCase();
-    card.className = "news-card";
-    card.style.cursor = "pointer";
+card.dataset.category = (post.originalCategory || post.category).toUpperCase();
 
+card.dataset.search = [
+  post.title,
+  post.category,
+  post.content
+].join(" ").toLowerCase();
+
+card.className = "news-card";
+card.style.cursor = "pointer";
+    
     // ADMIN CONTROLS
     if (isAdmin) {
       const actions = document.createElement("div");
