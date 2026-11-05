@@ -567,6 +567,38 @@ function renderEvents() {
 
     eventsList.appendChild(addButton);
   }
+
+  familyEvents.forEach(event => {
+    const card = document.createElement("div");
+    card.className = "event-card";
+
+    const name = document.createElement("h3");
+    name.textContent = event.event_name;
+
+    const date = document.createElement("p");
+    date.textContent = event.event_date;
+
+    const time = document.createElement("p");
+    time.textContent = event.end_time
+      ? `${event.start_time} - ${event.end_time}`
+      : event.start_time;
+
+    card.append(name, date, time);
+
+    if (event.location) {
+      const location = document.createElement("p");
+      location.textContent = event.location;
+      card.appendChild(location);
+    }
+
+    if (event.description) {
+      const description = document.createElement("p");
+      description.textContent = event.description;
+      card.appendChild(description);
+    }
+
+    eventsList.appendChild(card);
+  });
 }
 
 // ==========================================
