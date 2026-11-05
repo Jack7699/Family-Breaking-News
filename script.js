@@ -43,9 +43,6 @@ const yearElement = document.getElementById("year");
 // INITIAL PAGE STATE
 // ==========================================
 
-if (main) main.style.display = "none";
-if (footer) footer.style.display = "none";
-
 if (yearElement) {
   yearElement.textContent = new Date().getFullYear();
 }
@@ -131,11 +128,15 @@ function showFamilySite() {
   if (main) main.style.display = "";
   if (footer) footer.style.display = "";
 }
+// SHOW / HIDE PRIVATE WEBSITE
+// ==========================================
+
+function showFamilySite() {
+  if (main) main.style.display = "";
+  if (footer) footer.style.display = "";
+}
 
 function hideFamilySite() {
-  if (main) main.style.display = "none";
-  if (footer) footer.style.display = "none";
-
   if (dashboard) {
     dashboard.classList.remove("active");
   }
@@ -348,4 +349,5 @@ async function restoreSession() {
   }
 }
 
+loadPosts();
 restoreSession();
