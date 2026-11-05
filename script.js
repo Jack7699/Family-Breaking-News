@@ -569,6 +569,51 @@ function renderEvents() {
 }
 
 // ==========================================
+// CREATE EVENT
+// ==========================================
+
+if (eventForm) {
+  eventForm.addEventListener("submit", async event => {
+    event.preventDefault();
+
+    if (!isAdmin) return;
+
+    const {
+      data: { user }
+    } = await db.auth.getUser();
+
+    if (!user) {
+      alert(t("login_again"));
+      return;
+    }
+
+    const newEvent = {
+      event_name: eventName.value.trim(),
+      event_date: eventDate.value,
+      start_time: eventStart.value,
+      end_time: eventEnd.value || null,
+      location: eventLocation.value.trim() || null,
+      description: eventDescription.value.trim() || null,
+      created_by: user.id
+    };
+
+    const { error } = await db
+      .from("events")
+      .insert(newEvent);
+
+    if (error) {
+      console.error("Event creation failed:", error);
+      alert("Could not create event. Please try again.");
+      return;
+    }
+
+    eventForm.reset();
+    closeEventDashboardWindow();
+    await loadEvents();
+  });
+}
+
+// ==========================================
 // LOGIN OVERLAY
 // ==========================================
 
