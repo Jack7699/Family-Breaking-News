@@ -33,6 +33,8 @@ const postMessage = document.getElementById("post-message");
 const postLanguage = document.getElementById("post-language");
 
 const newsGrid = document.getElementById("news-grid");
+const newsSearch = document.getElementById("news-search");
+const categoryFilter = document.getElementById("category-filter");
 const ticker = document.getElementById("ticker");
 const eventsList = document.getElementById("events-list");
 const yearElement = document.getElementById("year");
@@ -674,6 +676,52 @@ async function deletePost(post) {
   alert(t("deleted"));
   await loadPosts();
 }
+
+// ==========================================
+// SEARCH & CATEGORY FILTER
+// ==========================================
+
+function applyPostFilters() {
+  if (!newsGrid) return;
+
+  const search = newsSearch?.value.trim().toLowerCase() || "";
+  const selectedCategory = categoryFilter?.value || "all";
+
+  const cards = newsGrid.querySelectorAll(".news-card");
+  let visibleCount = 0;
+
+  cards.forEach(card => {
+    const matchesSearch =
+      card.dataset.search?.includes(search) ?? true;
+
+    const matchesCategory =
+      selectedCategory === "all" ||
+      card.dataset.category === selectedCategory;
+
+    const visible = matchesSearch && matchesCategory;
+
+    card.style.display = visible ? "" : "none";
+
+    if (visible) visibleCount++;
+  });
+
+  let message = newsGrid.querySelector(".no-search-results");
+
+  if (visibleCount === 0 && cards.length > 0) {
+    if (!message) {
+      message = document.createElement("p");
+      message.className = "no-search-results";
+      newsGrid.appendChild(message);
+    }
+
+    message.textContent = "No matching articles found.";
+  } else if (message) {
+    message.remove();
+  }
+}
+
+newsSearch?.addEventListener("input", applyPostFilters);
+categoryFilter?.addEventListener("change", applyPostFilters);
 
 // ==========================================
 // LOAD POSTS FROM SUPABASE
