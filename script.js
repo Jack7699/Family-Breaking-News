@@ -602,6 +602,25 @@ function renderEvents() {
 }
 
 // ==========================================
+// LOAD EVENTS
+// ==========================================
+
+async function loadEvents() {
+  const { data, error } = await db
+    .from("events")
+    .select("*")
+    .order("event_date", { ascending: true });
+
+  if (error) {
+    console.error("Could not load events:", error);
+    return;
+  }
+
+  familyEvents = data || [];
+  renderEvents();
+}
+
+// ==========================================
 // CREATE EVENT
 // ==========================================
 
