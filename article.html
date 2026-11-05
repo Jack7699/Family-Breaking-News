@@ -1,12 +1,11 @@
-```html
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr" dir="ltr">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="theme-color" content="#101722">
   <title>Family Breaking News</title>
-  <link rel="stylesheet" href="./style.css?v=3">
+  <link rel="stylesheet" href="./style.css?v=4">
 </head>
 <body>
 
@@ -22,81 +21,266 @@
 </header>
 
 <nav class="navbar">
-  <a href="./index.html#home">HOME</a>
-  <a href="./index.html#about">ABOUT</a>
-  <a href="./index.html#events">EVENTS</a>
-  <a href="./index.html#latest">LATEST NEWS</a>
+  <a href="./index.html#home" id="home-link">ACCUEIL</a>
+  <a href="./index.html#about" id="about-link">À PROPOS</a>
+  <a href="./index.html#events" id="events-link">ÉVÉNEMENTS</a>
+  <a href="./index.html#latest" id="news-link">ACTUALITÉS</a>
+
+  <select id="language-select" aria-label="Select language">
+    <option value="fr">Français</option>
+    <option value="en">English</option>
+    <option value="ar">العربية</option>
+    <option value="es">Español</option>
+  </select>
 </nav>
 
 <main class="article-page">
-  <a href="./index.html#latest" class="article-back">← BACK TO LATEST NEWS</a>
+  <a href="./index.html#latest" class="article-back" id="back-link">
+    ← RETOUR AUX ACTUALITÉS
+  </a>
 
   <article id="article-content">
-    <p>Loading article...</p>
+    <p>Chargement de l'article...</p>
   </article>
 </main>
 
 <footer>
   <div class="footer-brand">FAMILY BREAKING NEWS</div>
-  <p>Independent family news network.</p>
+  <p id="footer-description">Réseau indépendant d'actualités familiales.</p>
   <p>© <span id="year"></span> Family Breaking News.</p>
 </footer>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
 <script>
 const SUPABASE_URL = "https://rrxdjaerxcgtgjkdghge.supabase.co";
-const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_YJhB36PS5fVR9dcr5tfJZg__25aZcFf";
+
+// Use your existing publishable key here.
+// Never use your secret/service_role key.
+const SUPABASE_PUBLISHABLE_KEY = "YOUR_EXISTING_PUBLISHABLE_KEY";
 
 const db = window.supabase.createClient(
   SUPABASE_URL,
   SUPABASE_PUBLISHABLE_KEY
 );
 
-document.getElementById("year").textContent = new Date().getFullYear();
+const translations = {
+  fr: {
+    home: "ACCUEIL",
+    about: "À PROPOS",
+    events: "ÉVÉNEMENTS",
+    news: "ACTUALITÉS",
+    back: "← RETOUR AUX ACTUALITÉS",
+    loading: "Chargement de l'article...",
+    notFound: "Article introuvable.",
+    error: "Impossible de charger cet article.",
+    footer: "Réseau indépendant d'actualités familiales."
+  },
+  en: {
+    home: "HOME",
+    about: "ABOUT",
+    events: "EVENTS",
+    news: "LATEST NEWS",
+    back: "← BACK TO LATEST NEWS",
+    loading: "Loading article...",
+    notFound: "Article not found.",
+    error: "Unable to load this article.",
+    footer: "Independent family news network."
+  },
+  ar: {
+    home: "الرئيسية",
+    about: "حول",
+    events: "الأحداث",
+    news: "آخر الأخبار",
+    back: "→ العودة إلى آخر الأخبار",
+    loading: "جارٍ تحميل المقال...",
+    notFound: "المقال غير موجود.",
+    error: "تعذر تحميل هذا المقال.",
+    footer: "شبكة أخبار عائلية مستقلة."
+  },
+  es: {
+    home: "INICIO",
+    about: "ACERCA DE",
+    events: "EVENTOS",
+    news: "ÚLTIMAS NOTICIAS",
+    back: "← VOLVER A LAS NOTICIAS",
+    loading: "Cargando artículo...",
+    notFound: "Artículo no encontrado.",
+    error: "No se pudo cargar este artículo.",
+    footer: "Red independiente de noticias familiares."
+  }
+};
+
+const params = new URLSearchParams(window.location.search);
+const articleId = params.get("id");
+
+let currentLanguage =
+  params.get("lang") ||
+  localStorage.getItem("fbn-language") ||
+  "fr";
+
+if (!translations[currentLanguage]) {
+  currentLanguage = "fr";
+}
+
+document.getElementById("year").textContent =
+  new Date().getFullYear();
+
+document.getElementById("language-select").value =
+  currentLanguage;
+
+function applyInterfaceLanguage() {
+  const t = translations[currentLanguage];
+
+  document.documentElement.lang = currentLanguage;
+  document.documentElement.dir =
+    currentLanguage === "ar" ? "rtl" : "ltr";
+
+  document.getElementById("home-link").textContent = t.home;
+  document.getElementById("about-link").textContent = t.about;
+  document.getElementById("events-link").textContent = t.events;
+  document.getElementById("news-link").textContent = t.news;
+  document.getElementById("back-link").textContent = t.back;
+  document.getElementById("footer-description").textContent =
+    t.footer;
+}
+
+// Translate text through MyMemory.
+// The original Supabase post is never modified.
+async function translateText(text, sourceLanguage, targetLanguage) {
+  if (!text || sourceLanguage === targetLanguage) {
+    return text;
+  }
+
+  const chunks = [];
+
+  for (let i = 0; i < text.length; i += 450) {
+    chunks.push(text.slice(i, i + 450));
+  }
+
+  const translatedChunks = [];
+
+  for (const chunk of chunks) {
+    try {
+      const url =
+        "https://api.mymemory.translated.net/get?" +
+        new URLSearchParams({
+          q: chunk,
+          langpair: sourceLanguage + "|" + targetLanguage
+        });
+
+      const response = await fetch(url);
+
+      if (!response.ok) {
+        return text;
+      }
+
+      const result = await response.json();
+
+      if (
+        result.responseStatus !== 200 ||
+        !result.responseData?.translatedText
+      ) {
+        return text;
+      }
+
+      // Decode translation entities safely as plain text.
+      const decoder = document.createElement("textarea");
+      decoder.innerHTML = result.responseData.translatedText;
+      translatedChunks.push(decoder.value);
+
+    } catch (error) {
+      console.error("Translation failed:", error);
+      return text;
+    }
+  }
+
+  return translatedChunks.join("");
+}
 
 async function loadArticle() {
-  const id = new URLSearchParams(window.location.search).get("id");
   const container = document.getElementById("article-content");
+  const t = translations[currentLanguage];
 
-  if (!id || !/^\d+$/.test(id)) {
-    container.textContent = "Article not found.";
+  container.textContent = t.loading;
+
+  if (!articleId || !/^\d+$/.test(articleId)) {
+    container.textContent = t.notFound;
     return;
   }
 
   const { data, error } = await db
     .from("posts")
-    .select("id, title, category, content, created_at")
-    .eq("id", Number(id))
+    .select("id, title, category, content, source_language, created_at")
+    .eq("id", Number(articleId))
     .maybeSingle();
 
   if (error || !data) {
-    container.textContent = "Article not found.";
+    console.error(error);
+    container.textContent = t.error;
     return;
   }
 
-  document.title = data.title + " | Family Breaking News";
+  const sourceLanguage = data.source_language || "fr";
+
+  const [translatedTitle, translatedCategory, translatedContent] =
+    await Promise.all([
+      translateText(data.title, sourceLanguage, currentLanguage),
+      translateText(data.category, sourceLanguage, currentLanguage),
+      translateText(data.content, sourceLanguage, currentLanguage)
+    ]);
+
+  document.title =
+    translatedTitle + " | Family Breaking News";
 
   const category = document.createElement("span");
   category.className = "category";
-  category.textContent = data.category;
+  category.textContent = translatedCategory;
 
   const title = document.createElement("h1");
-  title.textContent = data.title;
+  title.textContent = translatedTitle;
 
   const date = document.createElement("p");
   date.className = "news-date";
-  date.textContent = new Date(data.created_at).toLocaleDateString();
+  date.textContent = new Date(data.created_at).toLocaleDateString(
+    currentLanguage === "ar" ? "ar" :
+    currentLanguage === "es" ? "es" :
+    currentLanguage === "en" ? "en" : "fr"
+  );
 
   const content = document.createElement("div");
   content.className = "article-full-content";
-  content.textContent = data.content;
+  content.textContent = translatedContent;
 
-  container.replaceChildren(category, title, date, content);
+  container.replaceChildren(
+    category,
+    title,
+    date,
+    content
+  );
 }
 
+document.getElementById("language-select")
+  .addEventListener("change", function () {
+    currentLanguage = this.value;
+
+    localStorage.setItem("fbn-language", currentLanguage);
+
+    params.set("lang", currentLanguage);
+
+    history.replaceState(
+      {},
+      "",
+      window.location.pathname + "?" + params.toString()
+    );
+
+    applyInterfaceLanguage();
+    loadArticle();
+  });
+
+applyInterfaceLanguage();
 loadArticle();
 </script>
 
 </body>
 </html>
-```
