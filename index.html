@@ -276,8 +276,38 @@
       </div>
     </div>
     <div id="events-list"></div>
-  </section>
+    <!-- EVENT DASHBOARD -->
+<div id="event-dashboard" class="event-dashboard">
+  <div class="event-dashboard-box">
+    <div class="event-dashboard-header">
+      <h2>Create an Event</h2>
+      <button type="button" id="close-event-dashboard">×</button>
+    </div>
 
+    <form id="event-form">
+      <label>Event Name</label>
+      <input id="event-name" type="text" required>
+
+      <label>Date</label>
+      <input id="event-date" type="date" required>
+
+      <label>Start Time</label>
+      <input id="event-start" type="time" required>
+
+      <label>End Time</label>
+      <input id="event-end" type="time">
+
+      <label>Location</label>
+      <input id="event-location" type="text">
+
+      <label>Description</label>
+      <textarea id="event-description"></textarea>
+
+      <button type="submit">CREATE EVENT</button>
+    </form>
+  </div>
+</div>
+  </section>
   <section class="about" id="about">
     <span class="eyebrow" data-i18n="about_network">À PROPOS DU RÉSEAU</span>
       <h2>One family. One network.</h2>
