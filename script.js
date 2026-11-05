@@ -37,6 +37,16 @@ const newsSearch = document.getElementById("news-search");
 const categoryFilter = document.getElementById("category-filter");
 const ticker = document.getElementById("ticker");
 const eventsList = document.getElementById("events-list");
+const eventDashboard = document.getElementById("event-dashboard");
+const closeEventDashboard = document.getElementById("close-event-dashboard");
+const eventForm = document.getElementById("event-form");
+
+const eventName = document.getElementById("event-name");
+const eventDate = document.getElementById("event-date");
+const eventStart = document.getElementById("event-start");
+const eventEnd = document.getElementById("event-end");
+const eventLocation = document.getElementById("event-location");
+const eventDescription = document.getElementById("event-description");
 const yearElement = document.getElementById("year");
 const languageSelect = document.getElementById("language-select");
 
