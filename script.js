@@ -1008,6 +1008,8 @@ async function openFamilyAccount(session) {
     if (overlay) overlay.style.display = "flex";
 
     await loadPosts();
+    await loadEvents();
+renderEvents();
     return;
   }
 
