@@ -866,8 +866,10 @@ async function loadPosts() {
       }
     });
 
-    newsGrid.appendChild(card);
+      newsGrid.appendChild(card);
   });
+
+  applyPostFilters();
 
   if (ticker) {
     ticker.textContent = posts[0].title;
