@@ -763,12 +763,13 @@ async function loadPosts() {
         translateText(post.content, source, currentLanguage)
       ]);
 
-      return {
-        ...post,
-        title,
-        category,
-        content
-      };
+     return {
+  ...post,
+  originalCategory: post.category,
+  title,
+  category,
+  content
+};
     })
   );
 
