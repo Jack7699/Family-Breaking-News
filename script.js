@@ -521,41 +521,19 @@ function splitText(text, maxLength) {
 function renderEvents() {
   if (!eventsList) return;
 
-  const events = [
-    {
-      date: "TBA",
-      title: t("coming_soon"),
-      description: t("event_description")
-    },
-    {
-      date: "TBA",
-      title: t("event_update"),
-      description: t("event_update_description")
-    }
-  ];
-
   eventsList.replaceChildren();
 
-  events.forEach(event => {
-    const item = document.createElement("div");
-    item.className = "event-item";
+  if (isAdmin) {
+    const addButton = document.createElement("button");
+    addButton.type = "button";
+    addButton.className = "add-event-button";
+    addButton.textContent = "+";
+    addButton.title = "Create event";
 
-    const date = document.createElement("div");
-    date.className = "event-date";
-    date.textContent = event.date;
+    addButton.addEventListener("click", openEventDashboard);
 
-    const details = document.createElement("div");
-
-    const title = document.createElement("h3");
-    title.textContent = event.title;
-
-    const description = document.createElement("p");
-    description.textContent = event.description;
-
-    details.append(title, description);
-    item.append(date, details);
-    eventsList.appendChild(item);
-  });
+    eventsList.appendChild(addButton);
+  }
 }
 
 // ==========================================
