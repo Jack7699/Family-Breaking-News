@@ -1,12 +1,12 @@
+
 // ==========================================
 // FAMILY BREAKING NEWS — SUPABASE CONNECTION
 // ==========================================
 
 const SUPABASE_URL = "https://rrxdjaerxcgtgjkdghge.supabase.co";
 
-// Paste your Supabase PUBLISHABLE key between the quotes.
-// Never use your secret/service_role key here.
-const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_YJhB36PS5fVR9dcr5tfJZg__25aZcFf";
+// Keep your existing publishable key here.
+const SUPABASE_PUBLISHABLE_KEY = "YOUR_EXISTING_PUBLISHABLE_KEY";
 
 const db = window.supabase.createClient(
   SUPABASE_URL,
@@ -39,6 +39,9 @@ const ticker = document.getElementById("ticker");
 const eventsList = document.getElementById("events-list");
 const yearElement = document.getElementById("year");
 
+// Tracks whether the currently signed-in user is an admin.
+let isAdmin = false;
+
 // ==========================================
 // INITIAL PAGE STATE
 // ==========================================
@@ -47,7 +50,6 @@ if (yearElement) {
   yearElement.textContent = new Date().getFullYear();
 }
 
-// Make the login button available to all family members.
 if (adminButton) {
   adminButton.textContent = "FAMILY LOGIN";
 }
@@ -130,9 +132,96 @@ function showFamilySite() {
 }
 
 function hideFamilySite() {
+  isAdmin = false;
+
   if (dashboard) {
     dashboard.classList.remove("active");
   }
+}
+
+// ==========================================
+// EDIT A POST
+// ==========================================
+
+async function editPost(post) {
+  if (!isAdmin) return;
+
+  const newTitle = prompt("Edit the post title:", post.title);
+
+  if (newTitle === null) return;
+
+  if (!newTitle.trim()) {
+    alert("The title cannot be empty.");
+    return;
+  }
+
+  const newCategory = prompt(
+    "Edit category (ANNOUNCEMENT, FAMILY, NETWORK, BREAKING NEWS):",
+    post.category
+  );
+
+  if (newCategory === null) return;
+
+  if (!newCategory.trim()) {
+    alert("The category cannot be empty.");
+    return;
+  }
+
+  const newContent = prompt("Edit the post content:", post.content);
+
+  if (newContent === null) return;
+
+  if (!newContent.trim()) {
+    alert("The post content cannot be empty.");
+    return;
+  }
+
+  const { error } = await db
+    .from("posts")
+    .update({
+      title: newTitle.trim(),
+      category: newCategory.trim().toUpperCase(),
+      content: newContent.trim()
+    })
+    .eq("id", post.id);
+
+  if (error) {
+    console.error("Could not edit post:", error);
+    alert("Could not update the post. Check your permissions.");
+    return;
+  }
+
+  alert("Post updated successfully!");
+  await loadPosts();
+}
+
+// ==========================================
+// DELETE A POST
+// ==========================================
+
+async function deletePost(post) {
+  if (!isAdmin) return;
+
+  const confirmed = confirm(
+    "Are you sure you want to delete this post?\n\n" +
+    "This action cannot be undone."
+  );
+
+  if (!confirmed) return;
+
+  const { error } = await db
+    .from("posts")
+    .delete()
+    .eq("id", post.id);
+
+  if (error) {
+    console.error("Could not delete post:", error);
+    alert("Could not delete the post. Check your permissions.");
+    return;
+  }
+
+  alert("Post deleted successfully!");
+  await loadPosts();
 }
 
 // ==========================================
@@ -165,6 +254,39 @@ async function loadPosts() {
     const card = document.createElement("article");
     card.className = "news-card";
     card.style.cursor = "pointer";
+
+    // ADMIN CONTROLS
+    if (isAdmin) {
+      const actions = document.createElement("div");
+      actions.className = "post-admin-actions";
+
+      const editButton = document.createElement("button");
+      editButton.className = "post-edit-button";
+      editButton.type = "button";
+      editButton.textContent = "✎";
+      editButton.title = "Edit post";
+      editButton.setAttribute("aria-label", "Edit post");
+
+      editButton.addEventListener("click", event => {
+        event.stopPropagation();
+        editPost(post);
+      });
+
+      const deleteButton = document.createElement("button");
+      deleteButton.className = "post-delete-button";
+      deleteButton.type = "button";
+      deleteButton.textContent = "🗑";
+      deleteButton.title = "Delete post";
+      deleteButton.setAttribute("aria-label", "Delete post");
+
+      deleteButton.addEventListener("click", event => {
+        event.stopPropagation();
+        deletePost(post);
+      });
+
+      actions.append(editButton, deleteButton);
+      card.appendChild(actions);
+    }
 
     const image = document.createElement("div");
     image.className = "news-image";
@@ -200,8 +322,12 @@ async function loadPosts() {
     card.setAttribute("tabindex", "0");
 
     card.addEventListener("keydown", event => {
-      if (event.key === "Enter" || event.key === " ") {
+      if (
+        event.target === card &&
+        (event.key === "Enter" || event.key === " ")
+      ) {
         event.preventDefault();
+
         const articleURL = new URL("./article.html", window.location.href);
         articleURL.searchParams.set("id", post.id);
         window.open(articleURL.href, "_blank", "noopener,noreferrer");
@@ -237,12 +363,15 @@ async function openFamilyAccount(session) {
     }
 
     if (overlay) overlay.style.display = "flex";
+    await loadPosts();
     return;
   }
 
   showFamilySite();
 
-  if (member.role === "admin") {
+  isAdmin = member.role === "admin";
+
+  if (isAdmin) {
     dashboard.classList.add("active");
   } else {
     dashboard.classList.remove("active");
@@ -341,6 +470,8 @@ if (logoutButton) {
     }
 
     hideFamilySite();
+    await loadPosts();
+
     overlay.style.display = "flex";
     loginMessage.textContent = "You have been logged out.";
   });
