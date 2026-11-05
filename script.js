@@ -703,6 +703,7 @@ function showFamilySite() {
 
 function hideFamilySite() {
   isAdmin = false;
+  renderEvents();
 
   if (dashboard) {
     dashboard.classList.remove("active");
