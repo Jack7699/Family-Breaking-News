@@ -1,0 +1,80 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#101722">
+  <title>Family Breaking News</title>
+  <link rel="stylesheet" href="./style.css">
+</head>
+
+<body>
+
+<header>
+  <a href="./index.html" class="article-back">← Back to Home</a>
+</header>
+
+<main class="article-page">
+  <article id="article-content">
+    <p>Loading article...</p>
+  </article>
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script>
+const SUPABASE_URL = "https://rrxdjaerxcgtgjkdghge.supabase.co";
+const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_YJhB36PS5fVR9dcr5tfJZg__25aZcFf";
+
+const db = window.supabase.createClient(
+  SUPABASE_URL,
+  SUPABASE_PUBLISHABLE_KEY
+);
+
+async function loadArticle() {
+  const params = new URLSearchParams(window.location.search);
+  const id = params.get("id");
+  const container = document.getElementById("article-content");
+
+  if (!id || !/^\d+$/.test(id)) {
+    container.textContent = "Article not found.";
+    return;
+  }
+
+  const { data, error } = await db
+    .from("posts")
+    .select("id, title, category, content, created_at")
+    .eq("id", Number(id))
+    .maybeSingle();
+
+  if (error || !data) {
+    container.textContent = "Article not found.";
+    return;
+  }
+
+  document.title = data.title + " | Family Breaking News";
+
+  const category = document.createElement("span");
+  category.className = "category";
+  category.textContent = data.category;
+
+  const title = document.createElement("h1");
+  title.textContent = data.title;
+
+  const date = document.createElement("p");
+  date.className = "news-date";
+  date.textContent = new Date(data.created_at).toLocaleDateString();
+
+  const content = document.createElement("p");
+  content.className = "article-full-content";
+  content.textContent = data.content;
+
+  container.replaceChildren(category, title, date, content);
+}
+
+loadArticle();
+</script>
+
+</body>
+</html>
