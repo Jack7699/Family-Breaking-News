@@ -37,6 +37,7 @@ const newsSearch = document.getElementById("news-search");
 const categoryFilter = document.getElementById("category-filter");
 const ticker = document.getElementById("ticker");
 const eventsList = document.getElementById("events-list");
+let familyEvents = [];
 const eventDashboard = document.getElementById("event-dashboard");
 const closeEventDashboard = document.getElementById("close-event-dashboard");
 const eventForm = document.getElementById("event-form");
