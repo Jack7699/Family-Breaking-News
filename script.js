@@ -527,7 +527,29 @@ function splitText(text, maxLength) {
 // ==========================================
 // EVENTS
 // ==========================================
+function openEventDashboard() {
+  if (!isAdmin || !eventDashboard) return;
 
+  eventDashboard.classList.add("active");
+}
+
+function closeEventDashboardWindow() {
+  if (!eventDashboard) return;
+
+  eventDashboard.classList.remove("active");
+}
+
+if (closeEventDashboard) {
+  closeEventDashboard.addEventListener("click", closeEventDashboardWindow);
+}
+
+if (eventDashboard) {
+  eventDashboard.addEventListener("click", event => {
+    if (event.target === eventDashboard) {
+      closeEventDashboardWindow();
+    }
+  });
+}
 function renderEvents() {
   if (!eventsList) return;
 
