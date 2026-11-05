@@ -1136,8 +1136,9 @@ async function restoreSession() {
     return;
   }
 
-  if (data.session) {
-    await openFamilyAccount(data.session);
+ if (data.session) {
+  await openFamilyAccount(data.session);
+  await loadEvents();
   }
 }
 
