@@ -164,6 +164,7 @@ async function loadPosts() {
   data.forEach(post => {
     const card = document.createElement("article");
     card.className = "news-card";
+    card.style.cursor = "pointer";
 
     const image = document.createElement("div");
     image.className = "news-image";
@@ -187,6 +188,26 @@ async function loadPosts() {
 
     content.append(category, title, description, date);
     card.append(image, content);
+
+    // OPEN ARTICLE IN A NEW TAB
+    card.addEventListener("click", () => {
+      const articleURL = new URL("./article.html", window.location.href);
+      articleURL.searchParams.set("id", post.id);
+      window.open(articleURL.href, "_blank", "noopener,noreferrer");
+    });
+
+    card.setAttribute("role", "link");
+    card.setAttribute("tabindex", "0");
+
+    card.addEventListener("keydown", event => {
+      if (event.key === "Enter" || event.key === " ") {
+        event.preventDefault();
+        const articleURL = new URL("./article.html", window.location.href);
+        articleURL.searchParams.set("id", post.id);
+        window.open(articleURL.href, "_blank", "noopener,noreferrer");
+      }
+    });
+
     newsGrid.appendChild(card);
   });
 
