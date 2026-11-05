@@ -1,13 +1,13 @@
-
+```html
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr" dir="ltr">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="theme-color" content="#101722">
   <title>Family Breaking News</title>
 
-  <link rel="stylesheet" href="./style.css?v=3">
+  <link rel="stylesheet" href="./style.css?v=4">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
@@ -36,7 +36,8 @@
     }
 
     .post-editor input,
-    .post-editor textarea {
+    .post-editor textarea,
+    .post-editor select {
       display: block;
       width: 100%;
       padding: 15px;
@@ -48,26 +49,52 @@
       font-family: inherit;
     }
 
-    .post-editor input {
+    .post-editor input,
+    .post-editor select {
       height: 55px;
     }
 
     .post-editor textarea {
-      min-height: 650px;
+      min-height: 350px;
       resize: vertical;
       line-height: 1.6;
     }
 
-    .post-editor select {
-      display: block;
-      width: 100%;
-      height: 50px;
-      padding: 12px;
-      background: #0b1420;
+    .language-control {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-left: auto;
+    }
+
+    .language-control select {
+      background: #182536;
       color: white;
       border: 1px solid #40536b;
       border-radius: 4px;
-      font-size: 16px;
+      padding: 9px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    html[dir="rtl"] body {
+      text-align: right;
+    }
+
+    html[dir="rtl"] .language-control {
+      margin-left: 0;
+      margin-right: auto;
+    }
+
+    html[dir="rtl"] .post-editor input,
+    html[dir="rtl"] .post-editor textarea {
+      text-align: right;
+    }
+
+    @media(max-width: 600px) {
+      .language-control {
+        margin: 10px 0;
+      }
     }
   </style>
 </head>
@@ -79,37 +106,52 @@
     <span class="brand-icon">FBN</span>
     <div>
       <h1>FAMILY BREAKING NEWS</h1>
-      <p>YOUR FAMILY. YOUR NEWS. YOUR NETWORK.</p>
+      <p data-i18n="tagline">VOTRE FAMILLE. VOTRE ACTUALITÉ. VOTRE RÉSEAU.</p>
     </div>
   </div>
-  <div class="live"><span></span> LIVE NETWORK</div>
+  <div class="live"><span></span> <span data-i18n="live">RÉSEAU EN DIRECT</span></div>
 </header>
 
 <nav class="navbar">
-  <a href="#home">HOME</a>
-  <a href="#latest">LATEST NEWS</a>
-  <a href="#events">EVENTS</a>
-  <a href="#about">ABOUT</a>
-  <a href="#" id="admin-button" class="admin-button">ADMIN LOGIN</a>
+  <a href="#home" data-i18n="home">ACCUEIL</a>
+  <a href="#latest" data-i18n="latest">ACTUALITÉS</a>
+  <a href="#events" data-i18n="events">ÉVÉNEMENTS</a>
+  <a href="#about" data-i18n="about">À PROPOS</a>
+  <a href="#" id="admin-button" class="admin-button" data-i18n="family_login">CONNEXION FAMILLE</a>
+
+  <div class="language-control">
+    <span aria-hidden="true">🌐</span>
+    <select id="language-select" aria-label="Choose language">
+      <option value="fr" selected>🇫🇷 Français</option>
+      <option value="en">🇬🇧 English</option>
+      <option value="ar">🇲🇦 العربية</option>
+      <option value="es">🇪🇸 Español</option>
+    </select>
+  </div>
 </nav>
 
-<!-- ADMIN LOGIN -->
+<!-- FAMILY LOGIN -->
 <div class="login-overlay" id="login-overlay">
   <div class="login-box">
     <button class="close-login" id="close-login">×</button>
-    <span class="eyebrow">RESTRICTED ACCESS</span>
-    <h2>Admin Login</h2>
-    <p>Sign in to the newsroom administration.</p>
+    <span class="eyebrow" data-i18n="restricted">ACCÈS RESTREINT</span>
+    <h2 data-i18n="login_title">Connexion</h2>
+    <p data-i18n="login_description">Connectez-vous à l'administration de la salle de rédaction.</p>
 
     <form id="login-form">
-      <label>Email</label>
-<input id="admin-username" type="email"
-  placeholder="Enter your email" required>
+      <label data-i18n="email">E-mail</label>
+      <input id="admin-username" type="email"
+        placeholder="Entrez votre e-mail"
+        data-i18n-placeholder="email_placeholder" required>
 
-      <label>Password</label>
-      <input id="admin-password" type="password" placeholder="Enter password" required>
+      <label data-i18n="password">Mot de passe</label>
+      <input id="admin-password" type="password"
+        placeholder="Entrez votre mot de passe"
+        data-i18n-placeholder="password_placeholder" required>
 
-      <button type="submit" class="primary-btn login-submit">SIGN IN →</button>
+      <button type="submit" class="primary-btn login-submit" data-i18n="sign_in">
+        SE CONNECTER →
+      </button>
     </form>
 
     <p id="login-message"></p>
@@ -119,86 +161,94 @@
 <!-- ADMIN DASHBOARD -->
 <div class="admin-dashboard" id="admin-dashboard">
 
-  <h2>Administration Panel</h2>
-  <p>Welcome to Family Breaking News administration.</p>
+  <h2 data-i18n="admin_panel">Panneau d'administration</h2>
+  <p data-i18n="admin_welcome">Bienvenue dans l'administration de Family Breaking News.</p>
 
   <div class="post-editor">
-
-    <h3>CREATE A POST</h3>
+    <h3 data-i18n="create_post">CRÉER UN ARTICLE</h3>
 
     <form id="create-post-form">
 
-      <label for="post-title">TITLE:</label>
-      <input
-        type="text"
-        id="post-title"
-        placeholder="Enter post title..."
-        required
-      >
+      <label for="post-title" data-i18n="title_label">TITRE :</label>
+      <input type="text" id="post-title"
+        placeholder="Entrez le titre..."
+        data-i18n-placeholder="title_placeholder" required>
 
-      <label for="post-category">CATEGORY:</label>
+      <label for="post-category" data-i18n="category_label">CATÉGORIE :</label>
       <select id="post-category" required>
-        <option value="ANNOUNCEMENT">ANNOUNCEMENT</option>
-        <option value="FAMILY">FAMILY</option>
-        <option value="NETWORK">NETWORK</option>
-        <option value="BREAKING NEWS">BREAKING NEWS</option>
+        <option value="ANNOUNCEMENT" data-i18n="category_announcement">ANNONCE</option>
+        <option value="FAMILY" data-i18n="category_family">FAMILLE</option>
+        <option value="NETWORK" data-i18n="category_network">RÉSEAU</option>
+        <option value="BREAKING NEWS" data-i18n="category_breaking">DERNIÈRE MINUTE</option>
       </select>
 
-      <label for="post-description">POST:</label>
-      <textarea
-        id="post-description"
-        placeholder="Write your news post here..."
-        required
-      ></textarea>
+      <label for="post-language" data-i18n="post_language">LANGUE DE L'ARTICLE :</label>
+      <select id="post-language" required>
+        <option value="fr" selected>🇫🇷 Français</option>
+        <option value="en">🇬🇧 English</option>
+        <option value="ar">🇲🇦 العربية</option>
+        <option value="es">🇪🇸 Español</option>
+      </select>
 
-      <button type="submit" class="primary-btn">
-        PUBLISH POST →
+      <label for="post-description" data-i18n="post_label">ARTICLE :</label>
+      <textarea id="post-description"
+        placeholder="Écrivez votre actualité ici..."
+        data-i18n-placeholder="post_placeholder" required></textarea>
+
+      <button type="submit" class="primary-btn" data-i18n="publish">
+        PUBLIER →
       </button>
-
     </form>
 
     <p id="post-message"></p>
-
   </div>
 
-  <button id="logout-button" class="primary-btn">LOG OUT</button>
-
+  <button id="logout-button" class="primary-btn" data-i18n="logout">
+    SE DÉCONNECTER
+  </button>
 </div>
 
 <main>
 
   <section class="hero" id="home">
     <div class="hero-content">
-      <span class="eyebrow">THE FAMILY NEWSROOM</span>
-      <h2>Stay informed.<br><span>Stay connected.</span></h2>
-      <p>Your central destination for family announcements,
-         important updates, events and stories.</p>
-      <a href="#latest" class="primary-btn">EXPLORE THE NEWS →</a>
+      <span class="eyebrow" data-i18n="newsroom">LA RÉDACTION FAMILIALE</span>
+      <h2>
+        <span data-i18n="hero_line1">Restez informés.</span><br>
+        <span data-i18n="hero_line2">Restez connectés.</span>
+      </h2>
+      <p data-i18n="hero_description">
+        Votre destination centrale pour les annonces familiales,
+        les actualités importantes, les événements et les histoires.
+      </p>
+      <a href="#latest" class="primary-btn" data-i18n="explore">
+        DÉCOUVRIR LES ACTUALITÉS →
+      </a>
     </div>
 
     <div class="hero-side">
       <div class="network-card">
-        <span class="network-label">NETWORK STATUS</span>
-        <h3>OPERATIONAL</h3>
-        <p>Family News Network</p>
+        <span class="network-label" data-i18n="network_status">ÉTAT DU RÉSEAU</span>
+        <h3 data-i18n="operational">OPÉRATIONNEL</h3>
+        <p data-i18n="network_name">Réseau d'actualités familiales</p>
         <div class="status-line"></div>
-        <span class="small">ALL SYSTEMS NORMAL</span>
+        <span class="small" data-i18n="systems_normal">TOUS LES SYSTÈMES SONT NORMAUX</span>
       </div>
     </div>
   </section>
 
   <div class="breaking-bar">
-    <strong>BREAKING NEWS</strong>
-    <div id="ticker">Welcome to Family Breaking News.</div>
+    <strong data-i18n="breaking">DERNIÈRE MINUTE</strong>
+    <div id="ticker">Bienvenue sur Family Breaking News.</div>
   </div>
 
   <section class="section" id="latest">
     <div class="section-heading">
       <div>
-        <span class="eyebrow">THE NEWSROOM</span>
-        <h2>Latest Headlines</h2>
+        <span class="eyebrow" data-i18n="newsroom">LA RÉDACTION FAMILIALE</span>
+        <h2 data-i18n="latest_headlines">Dernières actualités</h2>
       </div>
-      <span class="section-label">RECENT UPDATES</span>
+      <span class="section-label" data-i18n="recent_updates">ACTUALITÉS RÉCENTES</span>
     </div>
     <div class="news-grid" id="news-grid"></div>
   </section>
@@ -206,31 +256,13 @@
   <section class="section events" id="events">
     <div class="section-heading">
       <div>
-        <span class="eyebrow">ON THE CALENDAR</span>
-        <h2>Upcoming Events</h2>
+        <span class="eyebrow" data-i18n="calendar">AU CALENDRIER</span>
+        <h2 data-i18n="upcoming_events">Événements à venir</h2>
       </div>
     </div>
     <div id="events-list"></div>
   </section>
 
   <section class="about" id="about">
-    <span class="eyebrow">ABOUT THE NETWORK</span>
-    <h2>One family. One network.</h2>
-    <p>Family Breaking News is a family-focused news platform
-       dedicated to sharing announcements, updates and memorable
-       moments in one place.</p>
-  </section>
-
-</main>
-
-<footer>
-  <div class="footer-brand">FAMILY BREAKING NEWS</div>
-  <p>Independent family news network.</p>
-  <p>© <span id="year"></span> Family Breaking News.</p>
-</footer>
-
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="./script.js?v=6"></script>
-
-</body>
-</html>
+    <span class="eyebrow" data-i18n="about_network">À PROPOS DU RÉSEAU</span>
+    <h2 data-i
