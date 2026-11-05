@@ -519,3 +519,52 @@ footer p {
     padding: 25px;
   }
 }
+/* NEWS SEARCH & CATEGORY FILTER */
+
+.news-tools {
+  display: flex;
+  gap: 15px;
+  margin: 30px 0;
+  width: 100%;
+}
+
+.news-tools input,
+.news-tools select {
+  background: #101c2b;
+  color: #ffffff;
+  border: 1px solid #30445c;
+  border-radius: 6px;
+  padding: 15px;
+  font-family: inherit;
+  font-size: 14px;
+  outline: none;
+}
+
+.news-tools input {
+  flex: 1;
+  min-width: 0;
+}
+
+.news-tools select {
+  min-width: 200px;
+  cursor: pointer;
+}
+
+.news-tools input:focus,
+.news-tools select:focus {
+  border-color: #3b82f6;
+}
+
+.news-tools input::placeholder {
+  color: #8191a5;
+}
+
+@media (max-width: 600px) {
+  .news-tools {
+    flex-direction: column;
+  }
+
+  .news-tools select {
+    width: 100%;
+  }
+}
