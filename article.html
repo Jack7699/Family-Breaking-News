@@ -1,4 +1,4 @@
-
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,35 +6,56 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="theme-color" content="#101722">
   <title>Family Breaking News</title>
-  <link rel="stylesheet" href="./style.css">
+  <link rel="stylesheet" href="./style.css?v=3">
 </head>
-
 <body>
 
-<header>
-  <a href="./index.html" class="article-back">← Back to Home</a>
+<header class="topbar">
+  <div class="brand">
+    <span class="brand-icon">FBN</span>
+    <div>
+      <h1>FAMILY BREAKING NEWS</h1>
+      <p>YOUR FAMILY. YOUR NEWS. YOUR NETWORK.</p>
+    </div>
+  </div>
+  <div class="live"><span></span> LIVE NETWORK</div>
 </header>
 
+<nav class="navbar">
+  <a href="./index.html#home">HOME</a>
+  <a href="./index.html#about">ABOUT</a>
+  <a href="./index.html#events">EVENTS</a>
+  <a href="./index.html#latest">LATEST NEWS</a>
+</nav>
+
 <main class="article-page">
+  <a href="./index.html#latest" class="article-back">← BACK TO LATEST NEWS</a>
+
   <article id="article-content">
     <p>Loading article...</p>
   </article>
 </main>
 
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<footer>
+  <div class="footer-brand">FAMILY BREAKING NEWS</div>
+  <p>Independent family news network.</p>
+  <p>© <span id="year"></span> Family Breaking News.</p>
+</footer>
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
 const SUPABASE_URL = "https://rrxdjaerxcgtgjkdghge.supabase.co";
-const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_YJhB36PS5fVR9dcr5tfJZg__25aZcFf";
+const SUPABASE_PUBLISHABLE_KEY = "PASTE_YOUR_EXISTING_PUBLISHABLE_KEY_HERE";
 
 const db = window.supabase.createClient(
   SUPABASE_URL,
   SUPABASE_PUBLISHABLE_KEY
 );
 
+document.getElementById("year").textContent = new Date().getFullYear();
+
 async function loadArticle() {
-  const params = new URLSearchParams(window.location.search);
-  const id = params.get("id");
+  const id = new URLSearchParams(window.location.search).get("id");
   const container = document.getElementById("article-content");
 
   if (!id || !/^\d+$/.test(id)) {
@@ -66,7 +87,7 @@ async function loadArticle() {
   date.className = "news-date";
   date.textContent = new Date(data.created_at).toLocaleDateString();
 
-  const content = document.createElement("p");
+  const content = document.createElement("div");
   content.className = "article-full-content";
   content.textContent = data.content;
 
@@ -78,3 +99,4 @@ loadArticle();
 
 </body>
 </html>
+```
