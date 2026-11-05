@@ -249,7 +249,23 @@
       </div>
       <span class="section-label" data-i18n="recent_updates">ACTUALITÉS RÉCENTES</span>
     </div>
-    <div class="news-grid" id="news-grid"></div>
+<div class="news-tools">
+  <input
+    type="search"
+    id="news-search"
+    placeholder="Search articles..."
+  >
+
+  <select id="category-filter">
+    <option value="all">All categories</option>
+    <option value="ANNOUNCEMENT">Announcements</option>
+    <option value="FAMILY">Family</option>
+    <option value="NETWORK">Network</option>
+    <option value="BREAKING NEWS">Breaking News</option>
+  </select>
+</div>
+
+<div class="news-grid" id="news-grid"></div>
   </section>
 
   <section class="section events" id="events">
