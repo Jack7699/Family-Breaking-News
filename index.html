@@ -58,6 +58,42 @@
 <div class="admin-dashboard" id="admin-dashboard">
   <h2>Administration Panel</h2>
   <p>Welcome to Family Breaking News administration.</p>
+
+  <div class="post-editor">
+    <h3>Create a News Post</h3>
+
+    <form id="create-post-form">
+      <label>Post Title</label>
+      <input
+        type="text"
+        id="post-title"
+        placeholder="Enter post title"
+        required
+      >
+
+      <label>Category</label>
+      <select id="post-category" required>
+        <option value="ANNOUNCEMENT">ANNOUNCEMENT</option>
+        <option value="FAMILY">FAMILY</option>
+        <option value="NETWORK">NETWORK</option>
+        <option value="BREAKING NEWS">BREAKING NEWS</option>
+      </select>
+
+      <label>Article</label>
+      <textarea
+        id="post-description"
+        placeholder="Write your news article..."
+        required
+      ></textarea>
+
+      <button type="submit" class="primary-btn">
+        PUBLISH POST →
+      </button>
+    </form>
+
+    <p id="post-message"></p>
+  </div>
+
   <button id="logout-button" class="primary-btn">LOG OUT</button>
 </div>
 
