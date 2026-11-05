@@ -128,13 +128,6 @@ function showFamilySite() {
   if (main) main.style.display = "";
   if (footer) footer.style.display = "";
 }
-// SHOW / HIDE PRIVATE WEBSITE
-// ==========================================
-
-function showFamilySite() {
-  if (main) main.style.display = "";
-  if (footer) footer.style.display = "";
-}
 
 function hideFamilySite() {
   if (dashboard) {
