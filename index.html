@@ -1,5 +1,4 @@
 
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -11,6 +10,66 @@
   <link rel="stylesheet" href="./style.css?v=3">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    .post-editor {
+      background: #101c2b;
+      padding: 30px;
+      margin-top: 30px;
+      border: 1px solid #30445c;
+      border-radius: 8px;
+      width: 100%;
+    }
+
+    .post-editor h3 {
+      font-size: 24px;
+      margin-bottom: 25px;
+      color: #ffffff;
+      text-transform: uppercase;
+    }
+
+    .post-editor label {
+      display: block;
+      margin: 22px 0 10px;
+      color: #cbd5e1;
+      font-weight: bold;
+    }
+
+    .post-editor input,
+    .post-editor textarea {
+      display: block;
+      width: 100%;
+      padding: 15px;
+      background: #0b1420;
+      color: white;
+      border: 1px solid #40536b;
+      border-radius: 4px;
+      font-size: 16px;
+      font-family: inherit;
+    }
+
+    .post-editor input {
+      height: 55px;
+    }
+
+    .post-editor textarea {
+      min-height: 650px;
+      resize: vertical;
+      line-height: 1.6;
+    }
+
+    .post-editor select {
+      display: block;
+      width: 100%;
+      height: 50px;
+      padding: 12px;
+      background: #0b1420;
+      color: white;
+      border: 1px solid #40536b;
+      border-radius: 4px;
+      font-size: 16px;
+    }
+  </style>
 </head>
 
 <body>
@@ -23,7 +82,6 @@
       <p>YOUR FAMILY. YOUR NEWS. YOUR NETWORK.</p>
     </div>
   </div>
-
   <div class="live"><span></span> LIVE NETWORK</div>
 </header>
 
@@ -39,31 +97,18 @@
 <div class="login-overlay" id="login-overlay">
   <div class="login-box">
     <button class="close-login" id="close-login">×</button>
-
     <span class="eyebrow">RESTRICTED ACCESS</span>
     <h2>Admin Login</h2>
     <p>Sign in to the newsroom administration.</p>
 
     <form id="login-form">
       <label>Username</label>
-      <input
-        id="admin-username"
-        type="text"
-        placeholder="Enter username"
-        required
-      >
+      <input id="admin-username" type="text" placeholder="Enter username" required>
 
       <label>Password</label>
-      <input
-        id="admin-password"
-        type="password"
-        placeholder="Enter password"
-        required
-      >
+      <input id="admin-password" type="password" placeholder="Enter password" required>
 
-      <button type="submit" class="primary-btn login-submit">
-        SIGN IN →
-      </button>
+      <button type="submit" class="primary-btn login-submit">SIGN IN →</button>
     </form>
 
     <p id="login-message"></p>
@@ -76,7 +121,6 @@
   <h2>Administration Panel</h2>
   <p>Welcome to Family Breaking News administration.</p>
 
-  <!-- CREATE POST -->
   <div class="post-editor">
 
     <h3>CREATE A POST</h3>
@@ -116,115 +160,72 @@
 
   </div>
 
-  <button id="logout-button" class="primary-btn">
-    LOG OUT
-  </button>
+  <button id="logout-button" class="primary-btn">LOG OUT</button>
 
 </div>
 
 <main>
 
-  <!-- HERO -->
   <section class="hero" id="home">
     <div class="hero-content">
-
       <span class="eyebrow">THE FAMILY NEWSROOM</span>
-
-      <h2>
-        Stay informed.<br>
-        <span>Stay connected.</span>
-      </h2>
-
-      <p>
-        Your central destination for family announcements,
-        important updates, events and stories.
-      </p>
-
-      <a href="#latest" class="primary-btn">
-        EXPLORE THE NEWS →
-      </a>
-
+      <h2>Stay informed.<br><span>Stay connected.</span></h2>
+      <p>Your central destination for family announcements,
+         important updates, events and stories.</p>
+      <a href="#latest" class="primary-btn">EXPLORE THE NEWS →</a>
     </div>
 
     <div class="hero-side">
       <div class="network-card">
-
         <span class="network-label">NETWORK STATUS</span>
         <h3>OPERATIONAL</h3>
         <p>Family News Network</p>
-
         <div class="status-line"></div>
-
         <span class="small">ALL SYSTEMS NORMAL</span>
-
       </div>
     </div>
   </section>
 
-  <!-- BREAKING NEWS -->
   <div class="breaking-bar">
     <strong>BREAKING NEWS</strong>
     <div id="ticker">Welcome to Family Breaking News.</div>
   </div>
 
-  <!-- LATEST NEWS -->
   <section class="section" id="latest">
-
     <div class="section-heading">
       <div>
         <span class="eyebrow">THE NEWSROOM</span>
         <h2>Latest Headlines</h2>
       </div>
-
       <span class="section-label">RECENT UPDATES</span>
     </div>
-
     <div class="news-grid" id="news-grid"></div>
-
   </section>
 
-  <!-- EVENTS -->
   <section class="section events" id="events">
-
     <div class="section-heading">
       <div>
         <span class="eyebrow">ON THE CALENDAR</span>
         <h2>Upcoming Events</h2>
       </div>
     </div>
-
     <div id="events-list"></div>
-
   </section>
 
-  <!-- ABOUT -->
   <section class="about" id="about">
-
     <span class="eyebrow">ABOUT THE NETWORK</span>
-
     <h2>One family. One network.</h2>
-
-    <p>
-      Family Breaking News is a family-focused news platform
-      dedicated to sharing announcements, updates and memorable
-      moments in one place.
-    </p>
-
+    <p>Family Breaking News is a family-focused news platform
+       dedicated to sharing announcements, updates and memorable
+       moments in one place.</p>
   </section>
 
 </main>
 
-<!-- FOOTER -->
 <footer>
-
   <div class="footer-brand">FAMILY BREAKING NEWS</div>
-
   <p>Independent family news network.</p>
-
-  <p>
-    © <span id="year"></span> Family Breaking News.
-  </p>
-
+  <p>© <span id="year"></span> Family Breaking News.</p>
 </footer>
 
 <script src="./script.js?v=5"></script>
