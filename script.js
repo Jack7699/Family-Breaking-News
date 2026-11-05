@@ -775,8 +775,7 @@ async function loadPosts() {
   posts.forEach(post => {
     const card = document.createElement("article");
 
-    card.dataset.category = post.category.toUpperCase();
-    card.dataset.search = [
+      card.dataset.category = (post.originalCategory || post.category).toUpperCase();    card.dataset.search = [
       post.title,
       post.category,
       post.content
